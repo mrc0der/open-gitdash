@@ -18,7 +18,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-20.04
-    container: skynet/containername:0.1.1
+    # container: skynet/containername:0.1.1
     steps:
       - uses: actions/checkout@v3
       - uses: hadolint/hadolint-action@v3.1.0
