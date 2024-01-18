@@ -38,7 +38,8 @@ jobs:
   build-test:
     name: Build and Test
     runs-on: ubuntu-20.04
-    needs: [ "lint", "shellcheck" ]
+    needs: [ "shellcheck" ]
+    # needs: [ "lint", "shellcheck" ]
     steps:
       - uses: actions/checkout@v3
       - name: Build Docker image
