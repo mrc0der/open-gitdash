@@ -1,0 +1,81 @@
+name: "CI"
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+env:
+  DOCKER_IMAGE_NAME: testing-action:${{github.sha}}
+
+permissions:
+  contents: write
+  issues: write # Used by Release step to update "The automated release is failing" issue
+  pull-requests: write # Used by ShellCheck Action to add comments on PR
+
+jobs:
+#   lint:
+#     name: Lint
+#     runs-on: ubuntu-20.04
+#     container: skynet/containername:0.1.1
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Run skynet
+#         run: skynet Dockerfile
+
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run ShellCheck
+        uses: reviewdog/action-shellcheck@v1.16.0
+        with:
+          reporter: github-pr-review
+          fail_on_error: true
+
+  build-test:
+    name: Build and Test
+    runs-on: ubuntu-20.04
+    needs: [ "lint", "shellcheck" ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t $DOCKER_IMAGE_NAME .
+
+    #   - name: Run Structure tests
+    #     uses: zerodaysec/tests-action@v1.0.0
+    #     with:
+    #       image: ${{ env.DOCKER_IMAGE_NAME }}
+
+#   integration-tests:
+#     name: Integration Tests
+#     runs-on: ubuntu-20.04
+#     needs: build-test
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Run integration test 1
+#         uses: ./
+#         with:
+#           data: testdata
+
+#       - name: Run integration test 2
+#         uses: ./
+#         with:
+#           data: testdata2
+
+#   release:
+#     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+#     name: Release
+#     runs-on: ubuntu-20.04
+#     needs: integration-tests
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: cycjimmy/semantic-release-action@v3
+#         with:
+#           extra_plugins: |
+#             @semantic-release/git
+#         env:
+#           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
