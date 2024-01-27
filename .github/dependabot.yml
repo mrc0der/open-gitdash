@@ -9,3 +9,23 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "/api" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "pip" # See documentation for possible values
+    directory: "/dashboard" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "docker" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  # - package-ecosystem: "docker" # See documentation for possible values
+  #   directory: "/api" # Location of package manifests
+  #   schedule:
+  #     interval: "weekly"
+  # - package-ecosystem: "docker" # See documentation for possible values
+  #   directory: "/dashboard" # Location of package manifests
+  #   schedule:
+  #     interval: "weekly"

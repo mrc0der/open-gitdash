@@ -1,0 +1,11 @@
+version: '2'
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    environment:
+      - GITHUB_TOKEN=abcdef123
+    ports:
+      - "8000:8000"
+    tty: true
