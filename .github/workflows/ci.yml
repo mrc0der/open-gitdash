@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-20.04
     # container: skynet/containername:0.1.1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: hadolint/hadolint-action@v3.1.0
         with:
             dockerfile: Dockerfile
@@ -49,7 +49,7 @@ jobs:
     name: ShellCheck
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run ShellCheck
         uses: reviewdog/action-shellcheck@v1.19.0
         with:
@@ -62,7 +62,7 @@ jobs:
     # needs: [ "shellcheck" ]
     needs: [ "lint", "shellcheck" ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Build Docker image
         run: docker build -t $DOCKER_IMAGE_NAME .
 
@@ -76,7 +76,7 @@ jobs:
 #     runs-on: ubuntu-20.04
 #     needs: build-test
 #     steps:
-#       - uses: actions/checkout@v3
+#       - uses: actions/checkout@v4
 
 #       - name: Run integration test 1
 #         uses: ./
